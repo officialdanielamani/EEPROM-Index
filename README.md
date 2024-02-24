@@ -2,6 +2,9 @@
 
 This library simplifies the management of data stored in the EEPROM of Arduino boards. It provides an easy-to-use interface for adding, writing, reading, and clearing data, along with features for index management and data validation.
 
+## WARNING!:
+This library for my personal usage. May not stable until this message removed as I need add or remove functions based on own requirement.
+
 ## Features:
 * Manages indexes for organized data storage
 * Validates string inputs for printable ASCII characters
@@ -19,15 +22,19 @@ Include the library:
 `#include "EEPROMMIndex.h"`
 
 Create an instance:
-`EEPROMIndex index(512, 64, true); // 512 bytes of EEPROM, 64 max value size, debug enabled`
+`EEPROMIndex index(512, 65, 0, true); // 512 bytes of EEPROM, 65 max value size, start address ,debug enabled`
 
 Define indexes:
-`index.addIndex("WifiSSID", 0, 32);`
-`index.addIndex("WifiPass", 32, 32);`
+```
+index.addIndex("WifiSSID", 32) // Create index name "WifiSSID" with size of 32
+index.addIndex("WifiPass", 64); // Create index name "WifiPass" with size of 64
+```
 
 Write values:
-`index.writeMemory("WifiSSID", "Testing");`
-`index.writeMemory("WifiPass", "P@ssword");`
+```
+index.writeMemory("WifiSSID", "Testing");
+index.writeMemory("WifiPass", "P@ssword");
+```
 
 Read values:
 ```
