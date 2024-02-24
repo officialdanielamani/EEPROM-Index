@@ -73,7 +73,7 @@ void EEPROMIndex::writeMemory(const char* indexName, const char* value) {
 }
 
 void EEPROMIndex::readMemory(const char* indexName, char* output, int maxLen) {
-  EEPROM.begin(eepromSize);
+  EEPROM.begin(eepromSize); //For ESP8266 needed as connot read if not initialize ?
   EEPROMIndex::Index* index = findIndexByName(indexName);
   if (index == nullptr) {
     if (debug) Serial.println("Error: Index not found.");
@@ -93,7 +93,7 @@ void EEPROMIndex::readMemory(const char* indexName, char* output, int maxLen) {
 void EEPROMIndex::clearEEPROM() {
   EEPROM.begin(eepromSize);
   for (int i = 0; i < eepromSize; i++) {
-    EEPROM.write(i, 0); // Clearing the EEPROM
+    EEPROM.write(i, 0); // Clearing the EEPROM (0xFF not function on write?)
   }
   EEPROM.commit();
   if (debug) Serial.println("Done clearing EEPROM");

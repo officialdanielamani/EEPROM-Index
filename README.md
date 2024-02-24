@@ -1,9 +1,12 @@
 # EEPROMIndex Library
 
-This library simplifies the management of data stored in the EEPROM of Arduino boards. It provides an easy-to-use interface for adding, writing, reading, and clearing data, along with features for index management and data validation.
+This library simplifies the management of data stored in the EEPROM of Arduino boards. It provides an easy-to-use interface for adding, writing, reading, and clearing data, along with features for index management and data validation. This library is one of core in ESP Template System (later)
 
 ## WARNING!:
-This library for my personal usage. May not stable until this message removed as I need add or remove functions based on own requirement.
+This library for my personal usage. NOT FOR PRODUCTION USE. May not stable until this message removed as I need add or remove functions based on own requirement.
+
+## Dependency
+Need `<Arduino.h>` and `<EEPROM.h>`. This libraries is preinstall in Arduino IDE (if I not mistaken)
 
 ## Features:
 * Manages indexes for organized data storage
