@@ -1,16 +1,16 @@
-#include "EEPROMManagement.h"
+#include "EEPROMIndex.h"
 
-EEPROMManagement::EEPROMManagement(int eepromSize, int maxValueSize, bool debug)
+EEPROMIndex::EEPROMIndex(int eepromSize, int maxValueSize, bool debug)
 : eepromSize(eepromSize), maxValueSize(maxValueSize), numOfIndexes(0), maxSizeOfIndexes(10), debug(debug) {
     indexes = new Index[maxSizeOfIndexes];
     EEPROM.begin(eepromSize);
 }
 
-EEPROMManagement::~EEPROMManagement() {
+EEPROMIndex::~EEPROMIndex() {
     delete[] indexes; // Clean up the dynamically allocated memory
 }
 
-void EEPROMManagement::addIndex(const char* indexName, int startAddress, int size) {
+void EEPROMIndex::addIndex(const char* indexName, int startAddress, int size) {
     if (numOfIndexes >= maxSizeOfIndexes) {
         resizeIndexesArray(); // Resize the array if there's not enough space
     }
@@ -26,14 +26,14 @@ void EEPROMManagement::addIndex(const char* indexName, int startAddress, int siz
     }
 }
 
-void EEPROMManagement::writeMemory(const char* indexName, const char* value) {
+void EEPROMIndex::writeMemory(const char* indexName, const char* value) {
   EEPROM.begin(eepromSize);
     if (!validateString(value)) {
         if (debug) Serial.println("Error: String contains non-printable ASCII characters.");
         return;
     }
 
-    EEPROMManagement::Index* index = findIndexByName(indexName);
+    EEPROMIndex::Index* index = findIndexByName(indexName);
     if (index == nullptr) {
         if (debug) Serial.println("Error: Index not found.");
         return;
@@ -62,9 +62,9 @@ void EEPROMManagement::writeMemory(const char* indexName, const char* value) {
     EEPROM.commit();
 }
 
-void EEPROMManagement::readMemory(const char* indexName, char* output, int maxLen) {
+void EEPROMIndex::readMemory(const char* indexName, char* output, int maxLen) {
   EEPROM.begin(eepromSize);
-    EEPROMManagement::Index* index = findIndexByName(indexName);
+    EEPROMIndex::Index* index = findIndexByName(indexName);
     if (index == nullptr) {
         if (debug) Serial.println("Error: Index not found.");
         output[0] = '\0'; // Ensure we return an empty string if the index is not found
@@ -80,7 +80,7 @@ void EEPROMManagement::readMemory(const char* indexName, char* output, int maxLe
     output[len] = '\0'; // Ensure null termination
 }
 
-void EEPROMManagement::clearEEPROM() {
+void EEPROMIndex::clearEEPROM() {
     for (int i = 0; i < eepromSize; i++) {
         EEPROM.write(i, 0xFF); // Clearing the EEPROM
     }
@@ -88,18 +88,18 @@ void EEPROMManagement::clearEEPROM() {
     if (debug) Serial.println("Done clearing EEPROM");
 }
 
-bool EEPROMManagement::isPrintableASCII(char c) {
+bool EEPROMIndex::isPrintableASCII(char c) {
     return c >= 32 && c <= 126;
 }
 
-bool EEPROMManagement::validateString(const char* value) {
+bool EEPROMIndex::validateString(const char* value) {
     while (*value) {
         if (!isPrintableASCII(*value++)) return false;
     }
     return true;
 }
 
-EEPROMManagement::Index* EEPROMManagement::findIndexByName(const char* indexName) {
+EEPROMIndex::Index* EEPROMIndex::findIndexByName(const char* indexName) {
     for (int i = 0; i < numOfIndexes; i++) {
         if (indexes[i].name.equals(indexName)) { // Use .equals for String comparison in Arduino
             return &indexes[i];
@@ -108,7 +108,7 @@ EEPROMManagement::Index* EEPROMManagement::findIndexByName(const char* indexName
     return nullptr; // Return null if the index is not found
 }
 
-void EEPROMManagement::resizeIndexesArray() {
+void EEPROMIndex::resizeIndexesArray() {
     int newSize = maxSizeOfIndexes * 2; // Double the size
     Index* newIndexArray = new Index[newSize];
     for (int i = 0; i < numOfIndexes; i++) {

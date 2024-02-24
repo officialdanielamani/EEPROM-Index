@@ -1,13 +1,13 @@
-#ifndef EEPROMManagement_h
-#define EEPROMManagement_h
+#ifndef EEPROMIndex_h
+#define EEPROMIndex_h
 
 #include <Arduino.h>
 #include <EEPROM.h>
 
-class EEPROMManagement {
+class EEPROMIndex {
 public:
-    EEPROMManagement(int eepromSize, int maxValueSize = 64, bool debug = false); // Constructor with EEPROM size and optional max value size
-    ~EEPROMManagement(); // Destructor to clean up dynamically allocated memory
+    EEPROMIndex(int eepromSize, int maxValueSize = 64, bool debug = false); // Constructor with EEPROM size and optional max value size
+    ~EEPROMIndex(); // Destructor to clean up dynamically allocated memory
     void begin(); // Placeholder for potential initialization procedures
     void addIndex(const char* indexName, int startAddress, int size); // Add a new index
     void writeMemory(const char* indexName, const char* value); // Write a value to a specific index
@@ -32,4 +32,4 @@ private:
     bool isPrintableASCII(char c); // Check if character is printable ASCII
 };
 
-#endif /* EEPROMManagement_h */
+#endif /* EEPROMIndex_h */
