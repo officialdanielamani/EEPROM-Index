@@ -22,25 +22,29 @@ Need `<Arduino.h>` and `<EEPROM.h>`. This libraries is preinstall in Arduino IDE
 ## Usage:
 
 Include the library:
-`#include "EEPROMMIndex.h"`
+```C
+#include "EEPROMMIndex.h"
+```
 
 Create an instance:
-`EEPROMIndex index(512, 65, 0, true); // 512 bytes of EEPROM, 65 max value size, start address ,debug enabled`
+```C
+EEPROMIndex index(512, 65, 0, true); // 512 bytes of EEPROM, 65 max value size, start address ,debug enabled
+```
 
 Define indexes:
-```
+```C
 index.addIndex("WifiSSID", 32) // Create index name "WifiSSID" with size of 32
 index.addIndex("WifiPass", 64); // Create index name "WifiPass" with size of 64
 ```
 
 Write values:
-```
+```C
 index.writeMemory("WifiSSID", "Testing");
 index.writeMemory("WifiPass", "P@ssword");
 ```
 
 Read values:
-```
+```C
   char ssid[33];
   char pass[33];
 
@@ -54,4 +58,6 @@ Read values:
 ```
 
 Clear EEPROM:
-`index.clearEEPROM();`
+```C
+index.clearEEPROM();
+```
