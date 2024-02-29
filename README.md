@@ -28,7 +28,7 @@ Include the library:
 
 Create an instance:
 ```C
-EEPROMIndex index(512, 65, 0, true); // 512 bytes of EEPROM, 65 max value size, start address ,debug enabled
+EEPROMIndex index(512, 65, 0, true); // 512 bytes of EEPROM, 65 max value size, start address at 0 ,debug enabled
 ```
 
 Define indexes:
@@ -61,3 +61,10 @@ Clear EEPROM:
 ```C
 index.clearEEPROM();
 ```
+WARNING: This will clear all eeprom memory from 0-max define eeprom size
+
+### TODO
+- Add more memory check for safety
+- Add clear eeprom by range and index
+- Enable formated string (eg: date, time) to be save
+- Add option for array
